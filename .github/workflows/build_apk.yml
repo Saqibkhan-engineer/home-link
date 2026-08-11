@@ -56,8 +56,13 @@ jobs:
       - name: Generate code (Drift database files)
         run: dart run build_runner build --delete-conflicting-outputs
 
-      - name: Build APK
-        run: flutter build apk --release
+      - name: Build APK (with retry for network/403 issues)
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 15
+          max_attempts: 5
+          retry_wait_seconds: 15
+          command: flutter build apk --release
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
