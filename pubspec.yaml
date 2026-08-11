@@ -44,7 +44,7 @@ dependencies:
 
   # --- Serialization ---
   json_annotation: ^4.9.0
-  freezed_annotation: ^2.4.6
+  freezed_annotation: ^2.4.4
 
   # --- UI ---
   google_fonts: ^6.2.1
