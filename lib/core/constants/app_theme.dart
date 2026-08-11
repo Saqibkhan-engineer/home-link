@@ -79,7 +79,7 @@ class AppTheme {
         ),
         iconTheme: const IconThemeData(color: AppColors.textSecondary),
       ),
-      tabBarTheme: TabBarTheme(
+      tabBarTheme: TabBarThemeData(
         labelColor: AppColors.accent,
         unselectedLabelColor: AppColors.textSecondary,
         indicatorColor: AppColors.accent,
@@ -162,7 +162,7 @@ class AppTheme {
         thickness: 0.5,
         indent: 76,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.darkCard,
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -176,7 +176,7 @@ class AppTheme {
           color: AppColors.textPrimary,
         ),
       ),
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         backgroundColor: AppColors.darkSurface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         titleTextStyle: GoogleFonts.inter(

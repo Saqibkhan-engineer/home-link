@@ -183,39 +183,3 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   }
 }
 
-/// Helper widget that rebuilds when a [Listenable] changes.
-class AnimatedBuilder extends StatelessWidget {
-  final Listenable animation;
-  final Widget Function(BuildContext, Widget?) builder;
-
-  const AnimatedBuilder({
-    super.key,
-    required this.animation,
-    required this.builder,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder2(
-      animation: animation,
-      builder: builder,
-    );
-  }
-}
-
-class AnimatedBuilder2 extends AnimatedWidget {
-  final Widget Function(BuildContext, Widget?) builder;
-
-  const AnimatedBuilder2({
-    super.key,
-    required super.listenable,
-    required this.builder,
-  }) : super();
-
-  Listenable get animation => listenable;
-
-  @override
-  Widget build(BuildContext context) {
-    return builder(context, null);
-  }
-}
