@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Homelink</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>homelink</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+
+    <!-- ============================================== -->
+    <!-- Permissions for HomeLink App                   -->
+    <!-- ============================================== -->
+    
+    <!-- P2P / Local Network -->
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>HomeLink needs local network access to discover and connect with family members nearby.</string>
+    <key>NSBonjourServices</key>
+    <array>
+        <string>_homelink._tcp</string>
+        <string>_homelink._udp</string>
+    </array>
+    
+    <!-- Bluetooth for Discovery -->
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>HomeLink uses Bluetooth to find nearby devices for secure P2P connection.</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>HomeLink uses Bluetooth to find nearby devices for secure P2P connection.</string>
+    
+    <!-- Location (Sometimes required for network features) -->
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>HomeLink needs location access to enable peer discovery.</string>
+    
+    <!-- Voice Calls -->
+    <key>NSMicrophoneUsageDescription</key>
+    <string>HomeLink needs microphone access for voice calls.</string>
+    
+    <!-- Storage and Avatar -->
+    <key>NSCameraUsageDescription</key>
+    <string>HomeLink needs camera access to take profile pictures.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>HomeLink needs photo library access to upload avatars and send images.</string>
+
+</dict>
+</plist>
