@@ -27,7 +27,11 @@ jobs:
           channel: 'stable'
 
       - name: Generate Native Scaffolding
-        run: flutter create .
+        run: |
+          cp android/app/src/main/AndroidManifest.xml /tmp/AndroidManifest.xml
+          rm -rf android
+          flutter create --platforms=android .
+          cp /tmp/AndroidManifest.xml android/app/src/main/AndroidManifest.xml
 
       - name: Force Android compileSdk 36
         run: |
