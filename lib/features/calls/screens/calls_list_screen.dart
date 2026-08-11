@@ -5,6 +5,7 @@ import '../../../core/constants/app_theme.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/utils/date_formatter.dart';
 import '../../../data/database/tables/call_logs_table.dart';
+import '../../../data/database/app_database.dart';
 import '../../../main.dart';
 
 /// Reactive provider that watches all call logs.
@@ -92,8 +93,8 @@ class CallsListScreen extends ConsumerWidget {
     final isMissed = log.status == CallStatus.missed;
     final isOutgoing = log.status == CallStatus.outgoing;
 
-    IconData statusIcon;
-    Color statusColor;
+    IconData statusIcon = Icons.call_missed_rounded;
+    Color statusColor = AppColors.error;
 
     switch (log.status) {
       case CallStatus.missed:
