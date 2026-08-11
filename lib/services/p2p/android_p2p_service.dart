@@ -86,13 +86,13 @@ class AndroidP2PService implements P2PService {
       _updateState(P2PConnectionState.discovering);
 
       // Start the host's Wi-Fi Direct group
-      await _host!.startWifiDirect();
+      await _host!.createGroup();
 
       // Listen for incoming client connections
-      _host!.connectedClientsStream.listen((clients) {
+      _host!.streamClientList().listen((clients) {
         _connectedPeers.clear();
         for (final client in clients) {
-          _connectedPeers.add(client.toString());
+          _connectedPeers.add(client.id);
         }
         if (_connectedPeers.isNotEmpty) {
           _updateState(P2PConnectionState.connected);
@@ -101,7 +101,7 @@ class AndroidP2PService implements P2PService {
       });
 
       // Listen for incoming text messages from clients
-      _host!.textStream.listen((message) {
+      _host!.streamReceivedTexts().listen((message) {
         _handleIncomingText(message);
       });
 
@@ -117,7 +117,7 @@ class AndroidP2PService implements P2PService {
   @override
   Future<void> stopHost() async {
     try {
-      await _host?.stopWifiDirect();
+      await _host?.removeGroup();
       _role = P2PRole.none;
       _connectedPeers.clear();
       _updateState(P2PConnectionState.idle);
@@ -140,12 +140,13 @@ class AndroidP2PService implements P2PService {
       _discoveredPeers.clear();
 
       // Start BLE-based discovery for nearby hosts
-      _client!.discoveredHostsStream.listen((hosts) {
+      await _client!.startScan((hosts) {
         _discoveredPeers.clear();
         for (final host in hosts) {
           _discoveredPeers.add(DiscoveredPeer(
-            deviceId: host.toString(),
-            displayName: host.toString(),
+            deviceId: host.deviceAddress,
+            displayName: host.deviceName,
+            originalDevice: host,
           ));
         }
         _discoveredPeersController.add(List.from(_discoveredPeers));
@@ -153,11 +154,10 @@ class AndroidP2PService implements P2PService {
       });
 
       // Listen for incoming text messages from host
-      _client!.textStream.listen((message) {
+      _client!.streamReceivedTexts().listen((message) {
         _handleIncomingText(message);
       });
 
-      await _client!.startDiscovery();
       debugPrint('[P2P] Client discovery started.');
       return true;
     } catch (e) {
@@ -170,7 +170,7 @@ class AndroidP2PService implements P2PService {
   @override
   Future<void> stopDiscovery() async {
     try {
-      await _client?.stopDiscovery();
+      await _client?.stopScan();
       _discoveredPeers.clear();
       _discoveredPeersController.add([]);
       debugPrint('[P2P] Discovery stopped.');
@@ -185,7 +185,7 @@ class AndroidP2PService implements P2PService {
       _updateState(P2PConnectionState.connecting);
 
       // Connect to the host using its discovered credentials
-      await _client!.connectToHost(peer.deviceId);
+      await _client!.connectWithDevice(peer.originalDevice as BleDiscoveredDevice);
 
       _connectedPeers.add(peer.deviceId);
       _updateState(P2PConnectionState.connected);
@@ -223,9 +223,9 @@ class AndroidP2PService implements P2PService {
 
       if (_role == P2PRole.host) {
         // Broadcast to all connected clients, or target specific one
-        _host!.sendTextToAll(jsonStr);
+        _host!.broadcastText(jsonStr);
       } else if (_role == P2PRole.client) {
-        _client!.sendText(jsonStr);
+        _client!.broadcastText(jsonStr);
       } else {
         debugPrint('[P2P] Cannot send: no active role.');
         return false;
@@ -256,9 +256,9 @@ class AndroidP2PService implements P2PService {
       }
 
       if (_role == P2PRole.host) {
-        await _host!.sendFileToAll(file);
+        await _host!.broadcastFile(file);
       } else if (_role == P2PRole.client) {
-        await _client!.sendFile(file);
+        await _client!.broadcastFile(file);
       } else {
         return false;
       }

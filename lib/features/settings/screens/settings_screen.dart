@@ -193,11 +193,9 @@ class SettingsScreen extends ConsumerWidget {
               size: 160,
               backgroundColor: Colors.white,
               eyeStyle: const QrEyeStyle(
-                eyeShape: QrEyeShape.roundedOuter,
                 color: Color(0xFF075E54),
               ),
               dataModuleStyle: const QrDataModuleStyle(
-                dataModuleShape: QrDataModuleShape.roundedOuter,
                 color: Color(0xFF111B21),
               ),
             ),

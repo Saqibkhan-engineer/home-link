@@ -6,12 +6,14 @@ class DiscoveredPeer {
   final String displayName;
   final String? userId;
   final String? avatarPath;
+  final dynamic originalDevice;
 
   const DiscoveredPeer({
     required this.deviceId,
     required this.displayName,
     this.userId,
     this.avatarPath,
+    this.originalDevice,
   });
 
   @override
